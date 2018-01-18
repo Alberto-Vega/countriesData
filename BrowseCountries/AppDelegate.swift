@@ -21,11 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set Background Color of window
         window?.backgroundColor = UIColor.white
         
+        let navigationController = UINavigationController()
         // Allocate memory for an instance of the 'MainViewController' class
-        let mainViewController = ViewController()
+        let countriesTableViewController = ViewController()
+        
+        navigationController.viewControllers = [countriesTableViewController]
         
         // Set the root view controller of the app's window
-        window!.rootViewController = mainViewController
+        window!.rootViewController = navigationController
         
         // Make the window visible
         window!.makeKeyAndVisible()

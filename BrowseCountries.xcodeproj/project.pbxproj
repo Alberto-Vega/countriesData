@@ -15,6 +15,7 @@
 		D30D952620100E0100869A02 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D952520100E0100869A02 /* HTTPClient.swift */; };
 		D3ECB31820105234005FCA51 /* CountryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB31720105234005FCA51 /* CountryTests.swift */; };
 		D3ECB31A201052AE005FCA51 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB319201052AE005FCA51 /* Country.swift */; };
+		D3ECB320201137E0005FCA51 /* CountryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		D30D952520100E0100869A02 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		D3ECB31720105234005FCA51 /* CountryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTests.swift; sourceTree = "<group>"; };
 		D3ECB319201052AE005FCA51 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		D3ECB31C20111FC1005FCA51 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */,
 				D30D950720100DCF00869A02 /* ViewController.swift */,
 			);
 			path = Controllers;
@@ -220,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3ECB320201137E0005FCA51 /* CountryDetailViewController.swift in Sources */,
 				D30D950820100DCF00869A02 /* ViewController.swift in Sources */,
 				D30D950620100DCF00869A02 /* AppDelegate.swift in Sources */,
 				D3ECB31A201052AE005FCA51 /* Country.swift in Sources */,
