@@ -9,6 +9,10 @@
 import XCTest
 @testable import BrowseCountries
 
+class MockURLSession {
+    
+}
+
 class BrowseCountriesTests: XCTestCase {
     
     override func setUp() {
@@ -21,16 +25,17 @@ class BrowseCountriesTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testIntialization() {
+        let sharedSession = URLSession.shared
+        let httpClient = HTTPClient(sharedSession)
+        
+        XCTAssertNotNil(httpClient)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testSessionGetsSeetupAfterInitialization() {
+        let sharedSession = URLSession.shared
+        let httpClient = HTTPClient(sharedSession)
+        
+        XCTAssertNotNil(httpClient.session)
     }
-    
 }
