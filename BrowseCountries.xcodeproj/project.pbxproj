@@ -14,7 +14,8 @@
 		D30D951020100DCF00869A02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30D950E20100DCF00869A02 /* LaunchScreen.storyboard */; };
 		D30D951B20100DCF00869A02 /* BrowseCountriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D951A20100DCF00869A02 /* BrowseCountriesTests.swift */; };
 		D30D952620100E0100869A02 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D952520100E0100869A02 /* HTTPClient.swift */; };
-		D3ECB3162010485E005FCA51 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB3152010485E005FCA51 /* Reachability.swift */; };
+		D3ECB31820105234005FCA51 /* CountryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB31720105234005FCA51 /* CountryTests.swift */; };
+		D3ECB31A201052AE005FCA51 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB319201052AE005FCA51 /* Country.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,8 @@
 		D30D951A20100DCF00869A02 /* BrowseCountriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseCountriesTests.swift; sourceTree = "<group>"; };
 		D30D951C20100DCF00869A02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D30D952520100E0100869A02 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
-		D3ECB3152010485E005FCA51 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		D3ECB31720105234005FCA51 /* CountryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTests.swift; sourceTree = "<group>"; };
+		D3ECB319201052AE005FCA51 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +83,10 @@
 		D30D950420100DCF00869A02 /* BrowseCountries */ = {
 			isa = PBXGroup;
 			children = (
+				D3ECB319201052AE005FCA51 /* Country.swift */,
 				D30D950520100DCF00869A02 /* AppDelegate.swift */,
 				D30D952520100E0100869A02 /* HTTPClient.swift */,
 				D30D950720100DCF00869A02 /* ViewController.swift */,
-				D3ECB3152010485E005FCA51 /* Reachability.swift */,
 				D30D950920100DCF00869A02 /* Main.storyboard */,
 				D30D950C20100DCF00869A02 /* Assets.xcassets */,
 				D30D950E20100DCF00869A02 /* LaunchScreen.storyboard */,
@@ -96,6 +98,7 @@
 		D30D951920100DCF00869A02 /* BrowseCountriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				D3ECB31720105234005FCA51 /* CountryTests.swift */,
 				D30D951A20100DCF00869A02 /* BrowseCountriesTests.swift */,
 				D30D951C20100DCF00869A02 /* Info.plist */,
 			);
@@ -207,7 +210,7 @@
 			files = (
 				D30D950820100DCF00869A02 /* ViewController.swift in Sources */,
 				D30D950620100DCF00869A02 /* AppDelegate.swift in Sources */,
-				D3ECB3162010485E005FCA51 /* Reachability.swift in Sources */,
+				D3ECB31A201052AE005FCA51 /* Country.swift in Sources */,
 				D30D952620100E0100869A02 /* HTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3ECB31820105234005FCA51 /* CountryTests.swift in Sources */,
 				D30D951B20100DCF00869A02 /* BrowseCountriesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -53,12 +53,12 @@ class BrowseCountriesTests: XCTestCase {
         XCTAssertNotNil(httpClient.session)
     }
     
-    func testGetRequestWithURL() {
-        let url = "https://testURL"
-        httpClient.getRequest(stringURL: url) { (data, error) in
-            
-        }
-        
-        XCTAssert(session.urlCalled?.absoluteString == url)
-    }
+//    func testGetRequestWithURL() {
+//        let url = "https://testURL"
+//        httpClient.getRequest(stringURL: url) { (data, error) in
+//            
+//        }
+//        
+//        XCTAssert(session.urlCalled?.absoluteString == url)
+//    }
 }

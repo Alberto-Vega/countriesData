@@ -31,8 +31,7 @@ class ViewController: UIViewController {
                      let json = try JSONSerialization.jsonObject(with: data, options: [])
                     if let array = json as? [Any] {
                     for object in array {
-                        print(object as? [String : Any] ?? "Failed")
-                        // access all objects in array
+//                        print(object as? [String : Any] ?? "Failed")
                     }
                     }
                 } catch let error {
