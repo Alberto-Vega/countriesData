@@ -9,33 +9,56 @@
 import XCTest
 @testable import BrowseCountries
 
-class MockURLSession {
+class MockURLSession: URLSessionProtocol {
+    private (set) var urlCalled: URL?
     
+    func dataTask(with url: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        urlCalled = url.url
+        return URLSessionDataTask()
+    }
+    
+    func resume() {
+        
+    }
+}
+
+class MockURLSessionDataTask {
+    func resume() {
+        
+    }
 }
 
 class BrowseCountriesTests: XCTestCase {
     
+    var httpClient: HTTPClient!
+    var session: MockURLSession!
+
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        session = MockURLSession()
+         httpClient = HTTPClient(session)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+//        httpClient = nil
         super.tearDown()
     }
     
     func testIntialization() {
-        let sharedSession = URLSession.shared
-        let httpClient = HTTPClient(sharedSession)
-        
         XCTAssertNotNil(httpClient)
     }
     
-    func testSessionGetsSeetupAfterInitialization() {
-        let sharedSession = URLSession.shared
-        let httpClient = HTTPClient(sharedSession)
-        
+    func testSessionGetsSetupAfterInitialization() {
         XCTAssertNotNil(httpClient.session)
+    }
+    
+    func testGetRequestWithURL() {
+        let url = "https://testURL"
+        httpClient.getRequest(stringURL: url) { (data, error) in
+            
+        }
+        
+        XCTAssert(session.urlCalled?.absoluteString == url)
     }
 }

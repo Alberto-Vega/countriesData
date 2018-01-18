@@ -10,28 +10,38 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let stringURL = "https://restcountries-v1.p.mashape.com/all"
-        guard let url = URL(string: stringURL) else {
-            print("Log Error: unable to create URL from string")
-            return
-        }
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest.setValue("1IosQYQKu0mshuIZjcqiIXbiLGJSp1dBB9Yjsnfd2aISWLA7Yk", forHTTPHeaderField: "X-Mashape-Key")
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            print(response)
-        }
-        task.resume()
-        
+        getCountryData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    fileprivate func getCountryData() {
+        let stringURL = "https://restcountries-v1.p.mashape.com/all"
+        let HTTPClientInstance = HTTPClient(URLSession.shared)
+        HTTPClientInstance.getRequest(stringURL: stringURL) { (data, error) in
+            if let data = data {
+                do {
+                     let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    if let array = json as? [Any] {
+                    for object in array {
+                        print(object as? [String : Any] ?? "Failed")
+                        // access all objects in array
+                    }
+                    }
+                } catch let error {
+                    print("Log: \(error.localizedDescription)")
+                }
+            } else {
+                print("Log Error: No data was returned from request to: \(stringURL) \(String(describing: error?.localizedDescription))")
+            }
+        }
     }
 
 
