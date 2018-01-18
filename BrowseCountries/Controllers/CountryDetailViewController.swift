@@ -13,7 +13,8 @@ class CountryDetailViewController: UIViewController {
     
     var country: Country?
     var window: UIWindow?
-    var mapView: MKMapView?
+    var mapView = MKMapView()
+    let nameContainerView = UIView()
     
 //    init(country: Country) {
 //        self.country = country
@@ -21,7 +22,21 @@ class CountryDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.window
+        
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.showsCompass = true
+        mapView.showsScale = true 
+        view.addSubview(mapView)
+        let margins = view.layoutMarginsGuide
+//        mapView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        mapView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+
+//        mapView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+                mapView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+
+        mapView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
+        mapView.heightAnchor.constraint(equalTo: margins.heightAnchor, multiplier: 0.50).isActive = true
+        
         
     }
 
