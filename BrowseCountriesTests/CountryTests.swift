@@ -67,51 +67,8 @@ class CountryTests: XCTestCase {
         "relevance": "0"
     ]
     
-    let minorOutlyingIslands: [String: Any?] = [
-        "name": "United States Minor Outlying Islands",
-        "topLevelDomain": [
-        ".us"
-        ],
-        "alpha2Code": "UM",
-        "alpha3Code": "UMI",
-        "callingCodes": [
-        ""
-        ],
-        "capital": "",
-        "altSpellings": [
-        "UM"
-        ],
-        "region": "Americas",
-        "subregion": "Northern America",
-        "population": 300,
-        "latlng": [],
-        "demonym": "American",
-        "area": nil,
-        "gini": nil,
-        "timezones": [
-        "UTC-11:00",
-        "UTC-10:00",
-        "UTC+12:00"
-        ],
-        "borders": [],
-        "nativeName": "United States Minor Outlying Islands",
-        "numericCode": "581",
-        "currencies": [
-        "USD"
-        ],
-        "languages": [
-        "en"
-        ],
-        "translations": [
-            "de": "Kleinere Inselbesitzungen der Vereinigten Staaten",
-            "es": "Islas Ultramarinas Menores de Estados Unidos",
-            "fr": "Îles mineures éloignées des États-Unis",
-            "ja": "合衆国領有小離島",
-            "it": "Isole minori esterne degli Stati Uniti d'America"
-        ],
-        "relevance": "0"
-    ]
-    
+    let emtpyDictionary: [String: Any] = ["Test": "Test"]
+        
     override func setUp() {
         super.setUp()
         
@@ -122,11 +79,6 @@ class CountryTests: XCTestCase {
         super.tearDown()
     }
     
-//    func testCountryNameInitialization() {
-//        let country = try! Country(json: afghanistanDictionary)
-//        XCTAssert(country.name == "Afghanistan")
-//    }
-    
     func testCountryPropertiesInitialization() {
         let country = try! Country(json: afghanistanDictionary)
         XCTAssertEqual(country.name, "Afghanistan")
@@ -136,45 +88,38 @@ class CountryTests: XCTestCase {
         XCTAssertEqual(country.population, "26,023,100")
         XCTAssertEqual(country.latitude, 33)
         XCTAssertEqual(country.longitude, 65)
-        XCTAssertEqual(country.area, 652230.0)
         XCTAssertEqual(country.alpha2Code, "AF".lowercased())
-
-
     }
     
     func testMissingNameInitializationThrowsError() {
-//        let country = try! Country(json: afghanistanDictionary)
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+        XCTAssertThrowsError(try Country(json: emtpyDictionary))
+        XCTAssertThrowsError(try Country(json: emtpyDictionary), "There was no name key in this dictionary") { (error) in
             XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
         }
     }
     
     func testMissingCapitalNameInitializationThrowsError() {
-//        let country = try! Country(json: afghanistanDictionary)
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+        XCTAssertThrowsError(try Country(json: emtpyDictionary))
+        XCTAssertThrowsError(try Country(json: emtpyDictionary), "There was no capital name key in this dictionary") { (error) in
             XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
         }
     }
     
     func testMissingRegionInitializationThrowsError() {
-//        let country = try! Country(json: afghanistanDictionary)
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+        XCTAssertThrowsError(try Country(json: emtpyDictionary))
+        XCTAssertThrowsError(try Country(json: emtpyDictionary), "There was no name key in this dictionary") { (error) in
             XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
         }
     }
     
     func testMissingSubregionInitializationThrowsError() {
-//        let country = try! Country(json: afghanistanDictionary)
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
-        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+        XCTAssertThrowsError(try Country(json: emtpyDictionary))
+        XCTAssertThrowsError(try Country(json: emtpyDictionary), "There was no region key in this dictionary") { (error) in
             XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
         }
     }
     
-    func testThrowError() {
+    func testCorrectInfoDoesNotThrowError() {
         XCTAssertNoThrow(try Country(json: afghanistanDictionary))
     }
     
@@ -190,7 +135,4 @@ class CountryTests: XCTestCase {
         
         XCTAssert(country.latitude == 18.25 && country.longitude == -63.16666666)
     }
-    
-    
-    
 }
