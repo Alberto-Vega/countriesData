@@ -26,33 +26,35 @@ class CountryDetailContainer {
         self.mainView.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(mainView)
         let margins = parentView.layoutMarginsGuide
-        mainView.heightAnchor.constraint(equalTo: margins.heightAnchor, multiplier: 0.50).isActive = true
+        self.mainView.heightAnchor.constraint(equalTo: margins.heightAnchor, multiplier: 0.50).isActive = true
         
         //Header and subviews.
-        detailsHeaderView = UIView()
-        mainView.addSubview(detailsHeaderView)
+        self.detailsHeaderView = UIView()
+        self.mainView.addSubview(detailsHeaderView)
         
-        countryFlagImageView = UIImageView()
-        detailsHeaderView.addSubview(countryFlagImageView)
+        self.countryFlagImageView = UIImageView()
+        self.detailsHeaderView.addSubview(countryFlagImageView)
         
-        countryNameLabel = UILabel()
-        detailsHeaderView.addSubview(countryNameLabel)
+        self.countryNameLabel = UILabel()
+        self.countryNameLabel.lineBreakMode = NSLineBreakMode.byWordWrapping;
+        self.countryNameLabel.numberOfLines = 2;
+        self.detailsHeaderView.addSubview(countryNameLabel)
         
         //Body and  subviews
-        detailsBodyView = UIView()
-        mainView.addSubview(detailsBodyView)
+        self.detailsBodyView = UIView()
+        self.mainView.addSubview(detailsBodyView)
 
-        capitalNameLabel = UILabel()
-        mainView.addSubview(capitalNameLabel)
+        self.capitalNameLabel = UILabel()
+        self.mainView.addSubview(capitalNameLabel)
         
-        regionLabel = UILabel()
-        mainView.addSubview(regionLabel)
+        self.regionLabel = UILabel()
+        self.mainView.addSubview(regionLabel)
         
-        subRegionLabel = UILabel()
-        mainView.addSubview(subRegionLabel)
+        self.subRegionLabel = UILabel()
+        self.mainView.addSubview(subRegionLabel)
         
-        populationLabel = UILabel()
-        mainView.addSubview(populationLabel)
+        self.populationLabel = UILabel()
+        self.mainView.addSubview(populationLabel)
     }
     
     func setupConstraints() {
@@ -70,7 +72,7 @@ class CountryDetailContainer {
         
         countryNameLabel.translatesAutoresizingMaskIntoConstraints = false
         countryNameLabel.leadingAnchor.constraint(equalTo: countryFlagImageView.trailingAnchor, constant: 10.0).isActive = true
-        countryNameLabel.trailingAnchor.constraint(equalTo: detailsHeaderView.trailingAnchor, constant: 10.0).isActive = true
+        countryNameLabel.trailingAnchor.constraint(equalTo: detailsHeaderView.trailingAnchor, constant: -10.0).isActive = true
         countryNameLabel.centerYAnchor.constraint(equalTo: countryFlagImageView.centerYAnchor, constant: 0.0).isActive = true
 
         detailsBodyView.translatesAutoresizingMaskIntoConstraints = false
