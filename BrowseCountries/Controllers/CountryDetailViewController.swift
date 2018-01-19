@@ -55,7 +55,19 @@ class CountryDetailViewController: UIViewController {
             let area = country.area ?? Double(3000000000000000.00)
             let regionRadius: CLLocationDistance = area
             self.centerMapOnLocation(location: initialLocation, regionRadius: regionRadius)
+        } else {
+            print("Log Error: unable to display country \(self.country?.name ?? "") coordinates are nil")
+            self.alertUserOfMissingCoordinates()
         }
+    }
+    
+    fileprivate func alertUserOfMissingCoordinates() {
+        let alertController = UIAlertController(title: "Sorry!", message: "Coordinate data unavailable.", preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+            print("You've pressed cancel");
+        }
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     fileprivate func centerMapOnLocation(location: CLLocation, regionRadius: CLLocationDistance) {
