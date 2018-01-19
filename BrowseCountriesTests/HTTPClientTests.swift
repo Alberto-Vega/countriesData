@@ -28,7 +28,7 @@ class MockURLSessionDataTask {
     }
 }
 
-class BrowseCountriesTests: XCTestCase {
+class HTTPClientTests: XCTestCase {
     
     var httpClient: HTTPClient!
     var session: MockURLSession!
