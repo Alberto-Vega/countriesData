@@ -32,6 +32,8 @@ struct Country {
     let population: String
     let latitude: Double?
     let longitude: Double?
+    let area: Double?
+    let alpha2Code: String
     
     init(json: [String: Any]) throws {
         guard let name = json["name"] as? String else {
@@ -50,7 +52,7 @@ struct Country {
             throw SerializationError.missing("subregion")
         }
         
-        guard let population = json["population"] as? Int else {
+        guard let population = json["population"] as? NSNumber else {
             throw SerializationError.missing("population")
         }
         guard let latLong = json["latlng"] as? [Any] else {
@@ -61,14 +63,31 @@ struct Country {
             throw SerializationError.invalid("Invalid coordinates we got \(latLong.count) position points")
         }
         
+        guard let alpha2Code = json["alpha2Code"] as? String else {
+            throw SerializationError.missing("alpha2Code")
+        }
+                
         self.name = name
         self.capital = capital
         self.region = region
         self.subRegion = subRegion
-        self.population = String(population)
+        self.population = String(formatToReadable(number: population))
+
         self.latitude = convertToDouble(latLong[0])
         self.longitude = convertToDouble(latLong[1])
+        self.area = json["area"] as? Double
+        self.alpha2Code = alpha2Code.lowercased()
     }
+    
+
+}
+
+func formatToReadable(number: NSNumber) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.locale = Locale.current
+    return formatter.string(from: number) ?? "unable to format the number"
+    
 }
 
     func convertToDouble(_ number: Any) -> Double? {
