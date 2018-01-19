@@ -24,6 +24,8 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         self.setupTableView()
     }
     
+    //MARK: - Helper Functions.
+
     fileprivate func getCountryData() {
         let stringURL = "https://restcountries-v1.p.mashape.com/all"
         let HTTPClientInstance = HTTPClient(URLSession.shared)
@@ -81,7 +83,8 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
             ])
     }
     
-    //: MARK - Table View Data Source and Delegate Methods.
+    //MARK: - Table View Data Source and Delegate Methods.
+    
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.countries?.count ?? 0
     }
