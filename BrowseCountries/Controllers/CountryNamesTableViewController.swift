@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CountryNamesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var countries : [Country?]?
     var countriesTableView: UITableView  =   UITableView()
