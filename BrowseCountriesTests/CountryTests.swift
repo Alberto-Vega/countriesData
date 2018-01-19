@@ -122,22 +122,52 @@ class CountryTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCountryNameInitialization() {
-        let country = try! Country(json: afghanistanDictionary)
-        XCTAssert(country.name == "Afghanistan")
-    }
+//    func testCountryNameInitialization() {
+//        let country = try! Country(json: afghanistanDictionary)
+//        XCTAssert(country.name == "Afghanistan")
+//    }
     
-    func testCountryCapitalInitialization() {
+    func testCountryPropertiesInitialization() {
         let country = try! Country(json: afghanistanDictionary)
+        XCTAssertEqual(country.name, "Afghanistan")
         XCTAssertEqual(country.capital, "Kabul")
         XCTAssertEqual(country.region, "Asia")
         XCTAssertEqual(country.subRegion, "Southern Asia")
-        XCTAssertEqual(country.population, "26023100")
+        XCTAssertEqual(country.population, "26,023,100")
         XCTAssertEqual(country.latitude, 33)
+        XCTAssertEqual(country.longitude, 65)
+        XCTAssertEqual(country.area, 652230.0)
+        XCTAssertEqual(country.alpha2Code, "AF".lowercased())
+
+
     }
     
     func testMissingNameInitializationThrowsError() {
-        let country = try! Country(json: afghanistanDictionary)
+//        let country = try! Country(json: afghanistanDictionary)
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+            XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
+        }
+    }
+    
+    func testMissingCapitalNameInitializationThrowsError() {
+//        let country = try! Country(json: afghanistanDictionary)
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+            XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
+        }
+    }
+    
+    func testMissingRegionInitializationThrowsError() {
+//        let country = try! Country(json: afghanistanDictionary)
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
+        XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
+            XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))
+        }
+    }
+    
+    func testMissingSubregionInitializationThrowsError() {
+//        let country = try! Country(json: afghanistanDictionary)
         XCTAssertThrowsError(try Country(json: ["Test": "Test"]))
         XCTAssertThrowsError(try Country(json: ["Test": "Test"]), "There was no name key in this dictionary") { (error) in
             XCTAssertEqual(error as! SerializationError, SerializationError.missing("name"))

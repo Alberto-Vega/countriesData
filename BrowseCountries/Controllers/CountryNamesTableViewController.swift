@@ -63,8 +63,13 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         do{
             let currentCountry = try Country(json: contryJSON)
             self.countries?[index] = currentCountry
-        } catch Error.SerializeError(let message) {
-            print("Log Error: \(error.localizedDescription) message: \(message)")
+        } catch SerializationError.missing(let message) {
+            print("Log Error: \(message)")
+        } catch SerializationError.invalid(let message) {
+            print("Log Error: \(message)")
+        } catch let error {
+            print("Log Error: \(error.localizedDescription)")
+
         }
     }
     
