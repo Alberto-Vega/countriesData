@@ -54,9 +54,9 @@ struct Country {
         guard let latLong = json["latlng"] as? [Any] else {
             throw SerializationError.invalid("latlng")
         }
-        guard latLong.count == 2 else {
-            throw SerializationError.invalid("Invalid coordinates we got \(latLong.count) position points")
-        }
+//        guard latLong.count == 2 else {
+//            throw SerializationError.invalid("Invalid coordinates we got \(latLong.count) position points")
+//        }
         guard let alpha2Code = json["alpha2Code"] as? String else {
             throw SerializationError.missing("alpha2Code")
         }
@@ -66,8 +66,8 @@ struct Country {
         self.region = region
         self.subRegion = subRegion
         self.population = String(formatToReadable(number: population))
-        self.latitude = convertToDouble(latLong[0])
-        self.longitude = convertToDouble(latLong[1])
+        self.latitude = latLong.count == 2 ? convertToDouble(latLong[0]) : nil
+        self.longitude = latLong.count == 2 ? convertToDouble(latLong[1]) : nil
         self.area = json["area"] as? Double
         self.alpha2Code = alpha2Code.lowercased()
     }
