@@ -67,6 +67,51 @@ class CountryTests: XCTestCase {
         "relevance": "0"
     ]
     
+    let minorOutlyingIslands: [String: Any?] = [
+        "name": "United States Minor Outlying Islands",
+        "topLevelDomain": [
+        ".us"
+        ],
+        "alpha2Code": "UM",
+        "alpha3Code": "UMI",
+        "callingCodes": [
+        ""
+        ],
+        "capital": "",
+        "altSpellings": [
+        "UM"
+        ],
+        "region": "Americas",
+        "subregion": "Northern America",
+        "population": 300,
+        "latlng": [],
+        "demonym": "American",
+        "area": nil,
+        "gini": nil,
+        "timezones": [
+        "UTC-11:00",
+        "UTC-10:00",
+        "UTC+12:00"
+        ],
+        "borders": [],
+        "nativeName": "United States Minor Outlying Islands",
+        "numericCode": "581",
+        "currencies": [
+        "USD"
+        ],
+        "languages": [
+        "en"
+        ],
+        "translations": [
+            "de": "Kleinere Inselbesitzungen der Vereinigten Staaten",
+            "es": "Islas Ultramarinas Menores de Estados Unidos",
+            "fr": "Îles mineures éloignées des États-Unis",
+            "ja": "合衆国領有小離島",
+            "it": "Isole minori esterne degli Stati Uniti d'America"
+        ],
+        "relevance": "0"
+    ]
+    
     override func setUp() {
         super.setUp()
         
@@ -89,8 +134,6 @@ class CountryTests: XCTestCase {
         XCTAssertEqual(country.subRegion, "Southern Asia")
         XCTAssertEqual(country.population, "26023100")
         XCTAssertEqual(country.latitude, 33)
-
-
     }
     
     func testMissingNameInitializationThrowsError() {

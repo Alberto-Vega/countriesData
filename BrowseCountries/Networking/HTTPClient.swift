@@ -35,9 +35,7 @@ class HTTPClient {
             completion(nil, HTTPClientError.UnableToCreateURL("Unable to create URL object from string \(stringURL)"))
             return
         }
-        
         let urlRequest = setupURLRequest(url)
-
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             completion(data, error)
         }
