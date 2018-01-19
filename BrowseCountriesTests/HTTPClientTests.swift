@@ -33,7 +33,6 @@ class HTTPClientTests: XCTestCase {
     var httpClient: HTTPClient!
     var session: MockURLSession!
 
-    
     override func setUp() {
         super.setUp()
         session = MockURLSession()
@@ -41,7 +40,7 @@ class HTTPClientTests: XCTestCase {
     }
     
     override func tearDown() {
-//        httpClient = nil
+        httpClient = nil
         super.tearDown()
     }
     
@@ -52,13 +51,4 @@ class HTTPClientTests: XCTestCase {
     func testSessionGetsSetupAfterInitialization() {
         XCTAssertNotNil(httpClient.session)
     }
-    
-//    func testGetRequestWithURL() {
-//        let url = "https://testURL"
-//        httpClient.getRequest(stringURL: url) { (data, error) in
-//            
-//        }
-//        
-//        XCTAssert(session.urlCalled?.absoluteString == url)
-//    }
 }
