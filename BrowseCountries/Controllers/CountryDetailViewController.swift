@@ -17,12 +17,12 @@ class CountryDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.displaySelectedCountryOnMapView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.setupMapView()
         self.setupDetailsContainerView()
+        self.displaySelectedCountryOnMapView()
     }
     
     //MARK: - Helper Functions.
@@ -50,9 +50,13 @@ class CountryDetailViewController: UIViewController {
     }
     
     fileprivate func displaySelectedCountryOnMapView() {
-        if let country = self.country, let latitude = country.latitude, let longitude = country.longitude {
+        if let country = self.country,
+            let latitude = country.latitude,
+            let longitude = country.longitude,
+            let area = country.area
+        {
             let initialLocation = CLLocation(latitude: latitude , longitude: longitude)
-            let area = country.area ?? Double(3000000000000000.00)
+            let area = area.squareRoot() * 1000
             let regionRadius: CLLocationDistance = area
             self.centerMapOnLocation(location: initialLocation, regionRadius: regionRadius)
         } else {
@@ -74,6 +78,7 @@ class CountryDetailViewController: UIViewController {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                   regionRadius, regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
+        mapView.regionThatFits(coordinateRegion)
     }
 
     fileprivate func centerMapOnRect(location:CLLocation, regionRect: MKMapRect) {
