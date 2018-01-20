@@ -9,23 +9,23 @@
 import UIKit
 
 class CountryNamesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    var countries : [Country?]?
-    var countriesTableView: UITableView  =   UITableView()
-
+    
+    var countries = [Country]()
+    var countriesTableView: UITableView = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getCountryData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.getCountryData()
         self.navigationController?.navigationBar.topItem?.title = "Country List"
         self.setupTableView()
     }
     
     //MARK: - Helper Functions.
-
+    
     fileprivate func getCountryData() {
         let stringURL = "https://restcountries-v1.p.mashape.com/all"
         let HTTPClientInstance = HTTPClient(URLSession.shared)
@@ -41,15 +41,8 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
                     print("Log Error: unable to cast JSON to array of type Any")
                     return
                 }
-                self.countries = Array(repeatElement(nil, count: arrayFromJSON.count))
                 
-                for (index, object) in arrayFromJSON.enumerated() {
-                    guard let contryJSON = object as? [String : Any] else {
-                        print("Log Error: unable to cast serialized country object from Any to dictionary, failed with object at index: \(index) ")
-                        continue
-                    }
-                    self.buildContryInstances(contryJSON, index)
-                }
+                self.countries = arrayFromJSON.flatMap({ self.buildContryInstances($0 as! [String : Any]) })
                 DispatchQueue.main.async {
                     self.countriesTableView.reloadData()
                 }
@@ -59,18 +52,18 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    fileprivate func buildContryInstances(_ contryJSON: [String : Any], _ index: Int) {
+    fileprivate func buildContryInstances(_ contryJSON: [String : Any]) -> Country? {
         do{
             let currentCountry = try Country(json: contryJSON)
-            self.countries?[index] = currentCountry
+            return currentCountry
         } catch SerializationError.missing(let message) {
             print("Log Error: \(message)")
         } catch SerializationError.invalid(let message) {
             print("Log Error: \(message)")
         } catch let error {
             print("Log Error: \(error.localizedDescription)")
-
         }
+        return nil
     }
     
     fileprivate func setupTableView() {
@@ -90,25 +83,21 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     
     //MARK: - Table View Data Source and Delegate Methods.
     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countries?.count ?? 0
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.countries.count
     }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryNameCell", for: indexPath)
-        cell.textLabel?.text = self.countries?[indexPath.row]?.name
+        cell.textLabel?.text = self.countries[indexPath.row].name
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let selectedCountry = self.countries?[indexPath.row] else {
-            print("Log: failed to get optional country selected by cell tapped")
-            return
-        }
+        let selectedCountry = self.countries[indexPath.row]
         let detailViewController = CountryDetailViewController()
         detailViewController.country = selectedCountry
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
-
 }
 
