@@ -26,6 +26,7 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         self.getCountryData()
         self.navigationController?.navigationBar.topItem?.title = "Country List"
         self.setupTableView()
+        self.clearUserSelectedCell()
     }
     
     //MARK: - Helper Functions.
@@ -91,6 +92,12 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
             self.countriesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             self.countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
+    }
+    
+    fileprivate func clearUserSelectedCell() {
+        if let index = self.countriesTableView.indexPathForSelectedRow{
+            self.countriesTableView.deselectRow(at: index, animated: true)
+        }
     }
     
     //MARK: - Table View Data Source and Delegate Methods.
