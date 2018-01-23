@@ -25,7 +25,7 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     var sections: [[Any]] = []
     var countries = [Country]()
     var countriesTableView: UITableView = UITableView()
-    let searchController = UISearchController(searchResultsController: nil)
+    var searchController:UISearchController!
     let restCountriesClient = RestCountriesClient()
     var filteredCountries = [Country]()
 
@@ -50,17 +50,26 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     //MARK: - Helper Functions.
     
     fileprivate func setupSearchController() {
-        self.searchController.searchResultsUpdater = self
-        self.searchController.obscuresBackgroundDuringPresentation = false
+        let searchResultsViewController = SearchResultsViewController()
+        searchResultsViewController.countries = self.countries
+        self.searchController = UISearchController(searchResultsController: searchResultsViewController)
+        self.searchController.searchResultsUpdater = searchResultsViewController
+        self.searchController.obscuresBackgroundDuringPresentation = true
         self.searchController.searchBar.placeholder = "Search"
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .always
+        self.definesPresentationContext = true;
+
     }
     
     @objc fileprivate func populateCountriesArray(_ notification: Notification) {
         self.countries = restCountriesClient.countries
+        if let searchResultsController = self.searchController.searchResultsController as? SearchResultsViewController {
+            searchResultsController.countries = self.countries
+        }
+        
         DispatchQueue.main.async {
             self.countriesTableView.reloadData()
         }
@@ -108,58 +117,23 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     //MARK: - Table View Data Source and Delegate Methods.
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return self.filteredCountries.count
-        }
         return self.countries.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryNameCell", for: indexPath)
         let name: String
-        if isFiltering() {
-            name = self.filteredCountries[indexPath.row].name
-        } else {
             name = self.countries[indexPath.row].name
-        }
         cell.textLabel?.text = name
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry: Country
-        if isFiltering() {
-            selectedCountry = self.filteredCountries[indexPath.row]
-        } else {
             selectedCountry = self.countries[indexPath.row]
-        }
         let detailViewController = CountryDetailViewController()
         detailViewController.country = selectedCountry
         self.navigationController?.pushViewController(detailViewController, animated: true)
-    }
-    
-    func isFiltering() -> Bool {
-        return self.searchController.isActive && !searchBarIsEmpty()
-    }
-    
-    fileprivate func searchBarIsEmpty() -> Bool {
-        return self.searchController.searchBar.text?.isEmpty ?? true
-    }
-}
-
-extension CountryNamesTableViewController: UISearchResultsUpdating {
-    
-    // MARK: - UISearchResultsUpdating Delegate
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        self.filterContentForSearchText(searchController.searchBar.text!)
-    }
-    
-    fileprivate func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredCountries = countries.filter({( country : Country) -> Bool in
-            return country.name.lowercased().contains(searchText.lowercased())
-        })
-        self.countriesTableView.reloadData()
     }
 }
 
