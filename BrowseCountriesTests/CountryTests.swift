@@ -88,7 +88,7 @@ class CountryTests: XCTestCase {
         XCTAssertEqual(country.population, "26,023,100")
         XCTAssertEqual(country.latitude, 33)
         XCTAssertEqual(country.longitude, 65)
-        XCTAssertEqual(country.alpha2Code, "AF".lowercased())
+        XCTAssertEqual(country.flagImageURLString, "http://www.geonames.org/flags/l/af.gif")
     }
     
     func testMissingNameInitializationThrowsError() {
