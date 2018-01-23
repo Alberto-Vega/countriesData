@@ -23,12 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController()
         // Allocate memory for an instance of the 'MainViewController' class
         let countriesTableViewController = CountryNamesTableViewController()
+        
         navigationController.viewControllers = [countriesTableViewController]
-
-        //Delete This two lines.
-//        let countryDetailViewController = CountryDetailViewController()
-//        navigationController.viewControllers = [countryDetailViewController]
-
         
         // Set the root view controller of the app's window
         window!.rootViewController = navigationController
