@@ -13,70 +13,43 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     var countries = [Country]()
     var countriesTableView: UITableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
+    let restCountriesClient = RestCountriesClient()
     var filteredCountries = [Country]()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupSearchController()
+        restCountriesClient.getCountryData()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.populateCountriesArray(_:)), name: didGetCountryData, object: nil)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.getCountryData()
         self.navigationController?.navigationBar.topItem?.title = "Country List"
         self.setupTableView()
         self.clearUserSelectedCell()
     }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     //MARK: - Helper Functions.
     
+    @objc fileprivate func populateCountriesArray(_ notification: Notification) {
+        self.countries = restCountriesClient.countries
+        DispatchQueue.main.async {
+            self.countriesTableView.reloadData()
+        }
+    }
     fileprivate func setupSearchController() {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.searchBar.placeholder = "Search"
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = true
-    }
-    
-    fileprivate func getCountryData() {
-        let stringURL = "https://restcountries-v1.p.mashape.com/all"
-        let HTTPClientInstance = HTTPClient(URLSession.shared)
-        HTTPClientInstance.getRequest(stringURL: stringURL) { (data, error) in
-            guard let data = data else {
-                print("Log Error: No data was returned from request to: \(stringURL) \(String(describing: error?.localizedDescription))")
-                return
-            }
-            
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                guard let arrayFromJSON = json as? [Any] else {
-                    print("Log Error: unable to cast JSON to array of type Any")
-                    return
-                }
-                
-                self.countries = arrayFromJSON.flatMap({ self.buildContryInstances($0 as! [String : Any]) })
-                DispatchQueue.main.async {
-                    self.countriesTableView.reloadData()
-                }
-            } catch let error {
-                print("Log: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    fileprivate func buildContryInstances(_ contryJSON: [String : Any]) -> Country? {
-        do{
-            let currentCountry = try Country(json: contryJSON)
-            return currentCountry
-        } catch SerializationError.missing(let message) {
-            print("Log Error: \(message)")
-        } catch SerializationError.invalid(let message) {
-            print("Log Error: \(message)")
-        } catch let error {
-            print("Log Error: \(error.localizedDescription)")
-        }
-        return nil
     }
     
     fileprivate func setupTableView() {
