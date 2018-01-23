@@ -8,27 +8,29 @@
 
 import UIKit
 
-class Adapter: NSObject {
-    let val: Country
-    
-    init(val: Country) {
-        self.val = val
-    }
-    
-    @objc var name: String {
-        return val.name
-    }
-}
 
 class CountryNamesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-//    let collation = UILocalizedIndexedCollation.current()
-    var sections: [[Any]] = []
-    var countries = [Country]()
+    var sections: [String :[Country]] = [:]
+    var sectionTitles:[String] = []
+    var countries = [Country]() {
+        didSet {
+            for country in countries {
+                let initialLetter = String(country.name.prefix(1))
+                if sections[initialLetter] != nil {
+                    sections[initialLetter]?.append(country)
+                } else {
+                    sections[initialLetter] = [country]
+                }
+            }
+            sectionTitles = Array(sections.keys)
+            sectionTitles.sort()
+        }
+    }
     var countriesTableView: UITableView = UITableView()
     var searchController:UISearchController!
     let restCountriesClient = RestCountriesClient()
     var filteredCountries = [Country]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupSearchController()
@@ -42,7 +44,7 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         self.setupTableView()
         self.clearUserSelectedCell()
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -61,7 +63,7 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .always
         self.definesPresentationContext = true;
-
+        
     }
     
     @objc fileprivate func populateCountriesArray(_ notification: Notification) {
@@ -96,44 +98,49 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    // MARK: UITableViewDelegate
-
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return collation.sectionTitles[section]
-//    }
-//
-//    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        return collation.sectionIndexTitles
-//    }
-//
-//    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-//        if index == 0 {
-//            tableView.scrollRectToVisible((tableView.tableHeaderView?.frame)!, animated: true)
-//            return index-1
-//        }
-//        return collation.section(forSectionIndexTitle: index)
-//    }
-    
     //MARK: - Table View Data Source and Delegate Methods.
-
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionTitles.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
+    }
+    
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return sectionTitles
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countries.count
+        let keyForSection = sectionTitles[section]
+        if let countries = sections[keyForSection] {
+            return countries.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryNameCell", for: indexPath)
-        let name: String
-            name = self.countries[indexPath.row].name
-        cell.textLabel?.text = name
+        let keyForCountrySection = sectionTitles[indexPath.section]
+        if let countryValues = sections[keyForCountrySection] {
+            let name = countryValues[indexPath.row].name
+            cell.textLabel?.text = name
+            return cell
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry: Country
-            selectedCountry = self.countries[indexPath.row]
-        let detailViewController = CountryDetailViewController()
-        detailViewController.country = selectedCountry
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        
+        let keyForSection = sectionTitles[indexPath.section]
+        if let countries = sections[keyForSection] {
+            selectedCountry = countries[indexPath.row]
+            let detailViewController = CountryDetailViewController()
+            detailViewController.country = selectedCountry
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        }
     }
 }
 
