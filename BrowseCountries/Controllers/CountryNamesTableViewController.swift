@@ -12,9 +12,13 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     
     var countries = [Country]()
     var countriesTableView: UITableView = UITableView()
-    
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredCountries = [Country]()
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupSearchController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,6 +29,14 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     }
     
     //MARK: - Helper Functions.
+    
+    fileprivate func setupSearchController() {
+        self.searchController.searchResultsUpdater = self
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Search"
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = true
+    }
     
     fileprivate func getCountryData() {
         let stringURL = "https://restcountries-v1.p.mashape.com/all"
@@ -67,37 +79,75 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     }
     
     fileprivate func setupTableView() {
-        countriesTableView.dataSource = self
-        countriesTableView.delegate = self
-        countriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "countryNameCell")
+        self.countriesTableView.dataSource = self
+        self.countriesTableView.delegate = self
+        self.countriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "countryNameCell")
         self.view.addSubview(countriesTableView)
         
-        countriesTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.countriesTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            countriesTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            countriesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            countriesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            self.countriesTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            self.countriesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            self.countriesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            self.countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
     }
     
     //MARK: - Table View Data Source and Delegate Methods.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return self.filteredCountries.count
+        }
         return self.countries.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryNameCell", for: indexPath)
-        cell.textLabel?.text = self.countries[indexPath.row].name
+        let name: String
+        if isFiltering() {
+            name = self.filteredCountries[indexPath.row].name
+        } else {
+            name = self.countries[indexPath.row].name
+        }
+        cell.textLabel?.text = name
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCountry = self.countries[indexPath.row]
+        let selectedCountry: Country
+        if isFiltering() {
+            selectedCountry = self.filteredCountries[indexPath.row]
+        } else {
+            selectedCountry = self.countries[indexPath.row]
+        }
         let detailViewController = CountryDetailViewController()
         detailViewController.country = selectedCountry
         self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func isFiltering() -> Bool {
+        return self.searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    fileprivate func searchBarIsEmpty() -> Bool {
+        return self.searchController.searchBar.text?.isEmpty ?? true
+    }
+}
+
+extension CountryNamesTableViewController: UISearchResultsUpdating {
+    
+    // MARK: - UISearchResultsUpdating Delegate
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        self.filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    fileprivate func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredCountries = countries.filter({( country : Country) -> Bool in
+            return country.name.lowercased().contains(searchText.lowercased())
+        })
+        self.countriesTableView.reloadData()
     }
 }
 
