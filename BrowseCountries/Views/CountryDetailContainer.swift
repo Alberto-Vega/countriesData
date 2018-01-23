@@ -101,8 +101,6 @@ class CountryDetailContainer {
         regionLabel.text = "Region: \(country.region)"
         subRegionLabel.text = "SubRegion: \(country.subRegion)"
         populationLabel.text = "Population: \(country.population)"
-        let urlString = "http://www.geonames.org/flags/l/\(country.alpha2Code).gif"
-        countryFlagImageView.downloadedFrom(link: urlString, contentMode: UIViewContentMode.scaleAspectFit)
-
+        countryFlagImageView.downloadedFrom(link: country.flagImageURLString, contentMode: UIViewContentMode.scaleAspectFit)
     }
 }
