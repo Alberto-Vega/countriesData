@@ -128,8 +128,8 @@
 		D3ECB31C20111FC1005FCA51 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */,
 				D30D950720100DCF00869A02 /* CountryNamesTableViewController.swift */,
+				D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */,
 				D32DC82A2017ACBD00CB68C5 /* SearchResultsViewController.swift */,
 			);
 			path = Controllers;

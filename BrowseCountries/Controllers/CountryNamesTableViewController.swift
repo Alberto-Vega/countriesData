@@ -34,14 +34,14 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupSearchController()
+        self.setupTableView()
         restCountriesClient.getCountryData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.populateCountriesArray(_:)), name: didGetCountryData, object: nil)
+        self.navigationController?.navigationBar.topItem?.title = "Country List"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.topItem?.title = "Country List"
-        self.setupTableView()
         self.clearUserSelectedCell()
     }
     
@@ -66,17 +66,6 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         
     }
     
-    @objc fileprivate func populateCountriesArray(_ notification: Notification) {
-        self.countries = restCountriesClient.countries
-        if let searchResultsController = self.searchController.searchResultsController as? SearchResultsViewController {
-            searchResultsController.countries = self.countries
-        }
-        
-        DispatchQueue.main.async {
-            self.countriesTableView.reloadData()
-        }
-    }
-    
     fileprivate func setupTableView() {
         self.countriesTableView.dataSource = self
         self.countriesTableView.delegate = self
@@ -90,6 +79,17 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
             self.countriesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             self.countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
+    }
+    
+    @objc fileprivate func populateCountriesArray(_ notification: Notification) {
+        self.countries = restCountriesClient.countries
+        if let searchResultsController = self.searchController.searchResultsController as? SearchResultsViewController {
+            searchResultsController.countries = self.countries
+        }
+        
+        DispatchQueue.main.async {
+            self.countriesTableView.reloadData()
+        }
     }
     
     fileprivate func clearUserSelectedCell() {
