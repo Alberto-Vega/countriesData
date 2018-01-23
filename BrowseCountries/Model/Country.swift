@@ -80,13 +80,12 @@ func formatToReadable(number: NSNumber) -> String {
     return formatter.string(from: number) ?? "unable to format the number"
 }
 
-func convertToDouble(_ number: Any) -> Double? {
-    guard let double = number as? Double else {
-        if let integer = number as? Int {
-            return Double(integer)
-        }
-        return number as? Double
+func convertToDouble(_ value: Any) -> Double? {
+    if let string = value as? String {
+        return Double(string)
+    } else if let number = value as? NSNumber {
+        return Double(exactly: number)
     }
-    return double
+    return nil
 }
 
