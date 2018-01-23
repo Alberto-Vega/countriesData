@@ -34,4 +34,23 @@ class StandAloneFunctionsTests: XCTestCase {
         let sameDoubleNumber: Double = 1234
         XCTAssert(doubleNumber == sameDoubleNumber)
     }
+    
+    func testFormatToReadableSixDigits() {
+        XCTAssert(formatToReadable(number: 100000) == "100,000")
+    }
+    
+    func testFormatToReadableSixDigitsWithTwoDecimals() {
+        XCTAssert(formatToReadable(number: 100000.12) == "100,000.12")
+    }
+    
+    func testFormatToReadableFiveDigits() {
+        XCTAssert(formatToReadable(number: 10000) == "10,000")
+    }
+    func testFormatToReadableFourDigits() {
+        XCTAssert(formatToReadable(number: 1000) == "1,000")
+    }
+    
+    func testFormatToReadableThreeDigits() {
+        XCTAssert(formatToReadable(number: 100) == "100")
+    }
 }
