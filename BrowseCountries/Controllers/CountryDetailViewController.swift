@@ -56,13 +56,17 @@ class CountryDetailViewController: UIViewController {
             let area = country.area
         {
             let initialLocation = CLLocation(latitude: latitude , longitude: longitude)
-            let area = area.squareRoot() * 1000
+            let area = self.calculateAreaDiameterInMeters(area)
             let regionRadius: CLLocationDistance = area
-            self.centerMapOnLocation(location: initialLocation, regionRadius: regionRadius)
+            self.centerMapOnLocation(location: initialLocation, regionDiameter: regionRadius)
         } else {
             print("Log Error: unable to display country \(self.country?.name ?? "") coordinates are nil")
             self.alertUserOfMissingCoordinates()
         }
+    }
+    
+    fileprivate func calculateAreaDiameterInMeters(_ area: Double) -> Double {
+        return area < 400 ? area * 1000 : area.squareRoot() * 1000
     }
     
     fileprivate func alertUserOfMissingCoordinates() {
@@ -74,9 +78,8 @@ class CountryDetailViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    fileprivate func centerMapOnLocation(location: CLLocation, regionRadius: CLLocationDistance) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius, regionRadius)
+    fileprivate func centerMapOnLocation(location: CLLocation, regionDiameter: CLLocationDistance) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,regionDiameter, regionDiameter)
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.regionThatFits(coordinateRegion)
     }

@@ -33,7 +33,8 @@ struct Country {
     let latitude: Double?
     let longitude: Double?
     let area: Double?
-    let alpha2Code: String
+    let flagImageURLString: String
+
     
     init(json: [String: Any]) throws {
         guard let name = json["name"] as? String else {
@@ -54,9 +55,6 @@ struct Country {
         guard let latLong = json["latlng"] as? [Any] else {
             throw SerializationError.invalid("latlng")
         }
-//        guard latLong.count == 2 else {
-//            throw SerializationError.invalid("Invalid coordinates we got \(latLong.count) position points")
-//        }
         guard let alpha2Code = json["alpha2Code"] as? String else {
             throw SerializationError.missing("alpha2Code")
         }
@@ -69,7 +67,7 @@ struct Country {
         self.latitude = latLong.count == 2 ? convertToDouble(latLong[0]) : nil
         self.longitude = latLong.count == 2 ? convertToDouble(latLong[1]) : nil
         self.area = json["area"] as? Double
-        self.alpha2Code = alpha2Code.lowercased()
+        self.flagImageURLString = "http://www.geonames.org/flags/l/\(alpha2Code.lowercased()).gif"
     }
 }
 
@@ -83,12 +81,11 @@ func formatToReadable(number: NSNumber) -> String {
 }
 
 func convertToDouble(_ number: Any) -> Double? {
-    guard let double = number as? Double else {
-        if let integer = number as? Int {
-            return Double(integer)
-        }
-        return number as? Double
+    if let double = number as? Double  {
+        return double
+    } else if let integer = number as? Int {
+        return Double(integer)
     }
-    return double
+    return nil
 }
 
