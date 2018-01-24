@@ -57,35 +57,34 @@ class CountryDetailContainer {
         self.mainView.addSubview(populationLabel)
     }
     
-    func setupConstraints() {
-        countryFlagImageView.translatesAutoresizingMaskIntoConstraints = false
-        countryFlagImageView.leadingAnchor.constraint(equalTo: detailsHeaderView.leadingAnchor, constant: 10.0).isActive = true
-        countryFlagImageView.topAnchor.constraint(equalTo: detailsHeaderView.topAnchor, constant: 10.0).isActive = true
-        countryFlagImageView.bottomAnchor.constraint(equalTo: detailsHeaderView.bottomAnchor, constant: -10.0).isActive = true
-        countryFlagImageView.widthAnchor.constraint(equalTo: detailsHeaderView.widthAnchor, multiplier: 0.30).isActive = true
+    func setupInternalViewsConstraints() {
+        self.countryFlagImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.countryFlagImageView.leadingAnchor.constraint(equalTo: detailsHeaderView.leadingAnchor, constant: 10.0).isActive = true
+        self.countryFlagImageView.topAnchor.constraint(equalTo: detailsHeaderView.topAnchor, constant: 10.0).isActive = true
+        self.countryFlagImageView.bottomAnchor.constraint(equalTo: detailsHeaderView.bottomAnchor, constant: -10.0).isActive = true
+        self.countryFlagImageView.widthAnchor.constraint(equalTo: detailsHeaderView.widthAnchor, multiplier: 0.30).isActive = true
         
-        detailsHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        detailsHeaderView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
-        detailsHeaderView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
-        detailsHeaderView.topAnchor.constraint(equalTo: mainView.topAnchor).isActive = true
-        detailsHeaderView.heightAnchor.constraint(equalTo: mainView.heightAnchor, multiplier: 0.30).isActive = true
+        self.detailsHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        self.detailsHeaderView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor).isActive = true
+        self.detailsHeaderView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        self.detailsHeaderView.topAnchor.constraint(equalTo: mainView.topAnchor).isActive = true
+        self.detailsHeaderView.heightAnchor.constraint(equalTo: mainView.heightAnchor, multiplier: 0.30).isActive = true
         
-        countryNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        countryNameLabel.leadingAnchor.constraint(equalTo: countryFlagImageView.trailingAnchor, constant: 10.0).isActive = true
-        countryNameLabel.trailingAnchor.constraint(equalTo: detailsHeaderView.trailingAnchor, constant: -10.0).isActive = true
-        countryNameLabel.centerYAnchor.constraint(equalTo: countryFlagImageView.centerYAnchor, constant: 0.0).isActive = true
+        self.countryNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.countryNameLabel.leadingAnchor.constraint(equalTo: countryFlagImageView.trailingAnchor, constant: 10.0).isActive = true
+        self.countryNameLabel.trailingAnchor.constraint(equalTo: detailsHeaderView.trailingAnchor, constant: -10.0).isActive = true
+        self.countryNameLabel.centerYAnchor.constraint(equalTo: countryFlagImageView.centerYAnchor, constant: 0.0).isActive = true
 
-        detailsBodyView.translatesAutoresizingMaskIntoConstraints = false
-        detailsBodyView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 10.0).isActive = true
-        detailsBodyView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
-        detailsBodyView.topAnchor.constraint(equalTo: detailsHeaderView.bottomAnchor).isActive = true
-        detailsBodyView.heightAnchor.constraint(equalTo: mainView.heightAnchor, multiplier: 0.70).isActive = true
+        self.detailsBodyView.translatesAutoresizingMaskIntoConstraints = false
+        self.detailsBodyView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 10.0).isActive = true
+        self.detailsBodyView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor).isActive = true
+        self.detailsBodyView.topAnchor.constraint(equalTo: detailsHeaderView.bottomAnchor).isActive = true
+        self.detailsBodyView.heightAnchor.constraint(equalTo: mainView.heightAnchor, multiplier: 0.70).isActive = true
         
-        setupConstraintsFor(label: capitalNameLabel, below: detailsHeaderView, constant: 10.0)
-        setupConstraintsFor(label: regionLabel, below: capitalNameLabel, constant: 0.0)
-        setupConstraintsFor(label: subRegionLabel, below: regionLabel, constant: 0)
-        setupConstraintsFor(label: populationLabel, below: subRegionLabel, constant: 0)
-
+        self.setupConstraintsFor(label: capitalNameLabel, below: detailsHeaderView, constant: 10.0)
+        self.setupConstraintsFor(label: regionLabel, below: capitalNameLabel, constant: 0.0)
+        self.setupConstraintsFor(label: subRegionLabel, below: regionLabel, constant: 0)
+        self.setupConstraintsFor(label: populationLabel, below: subRegionLabel, constant: 0)
     }
     
     fileprivate func setupConstraintsFor(label: UILabel, below topView: UIView, constant: CGFloat) {

@@ -30,24 +30,23 @@ class CountryDetailViewController: UIViewController {
     //MARK: - Helper Functions.
     
     fileprivate func setupMapView() {
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(mapView)
+        self.mapView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(mapView)
         let margins = view.layoutMarginsGuide
-        mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        mapView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
-        mapView.heightAnchor.constraint(equalTo: margins.heightAnchor, multiplier: 0.50).isActive = true
+        self.mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        self.mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.mapView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
+        self.mapView.heightAnchor.constraint(equalTo: margins.heightAnchor, multiplier: 0.50).isActive = true
     }
     
     fileprivate func setupDetailsContainerView() {
-        detailsContainer = CountryDetailContainer(parentView: self.view)
-        detailsContainer?.mainView.topAnchor.constraint(equalTo: mapView.bottomAnchor).isActive = true
-        detailsContainer?.mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        detailsContainer?.mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-        detailsContainer?.setupConstraints()
+        self.detailsContainer = CountryDetailContainer(parentView: self.view)
+        self.detailsContainer?.mainView.topAnchor.constraint(equalTo: mapView.bottomAnchor).isActive = true
+        self.detailsContainer?.mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        self.detailsContainer?.mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.detailsContainer?.setupInternalViewsConstraints()
         if let country = self.country {
-            detailsContainer?.populateUIFor(country:country)
+            self.detailsContainer?.populateUIFor(country:country)
         }
     }
     
@@ -59,8 +58,8 @@ class CountryDetailViewController: UIViewController {
         {
             let initialLocation = CLLocation(latitude: latitude , longitude: longitude)
             let area = self.calculateAreaDiameterInMeters(area)
-            let regionRadius: CLLocationDistance = area
-            self.centerMapOnLocation(location: initialLocation, regionDiameter: regionRadius)
+            let regionDiameter: CLLocationDistance = area
+            self.centerMapOnLocation(location: initialLocation, regionDiameter: regionDiameter)
         } else {
             print("Log Error: unable to display country \(self.country?.name ?? "") coordinates are nil")
             self.alertUserOfMissingCoordinates()
@@ -82,11 +81,11 @@ class CountryDetailViewController: UIViewController {
     
     fileprivate func centerMapOnLocation(location: CLLocation, regionDiameter: CLLocationDistance) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,regionDiameter, regionDiameter)
-        mapView.setRegion(coordinateRegion, animated: true)
-        mapView.regionThatFits(coordinateRegion)
+        self.mapView.setRegion(coordinateRegion, animated: true)
+        self.mapView.regionThatFits(coordinateRegion)
     }
 
     fileprivate func centerMapOnRect(location:CLLocation, regionRect: MKMapRect) {
-        mapView.setVisibleMapRect(regionRect, animated: true)
+        self.mapView.setVisibleMapRect(regionRect, animated: true)
     }
 }
