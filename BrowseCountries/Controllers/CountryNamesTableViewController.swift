@@ -34,8 +34,9 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupSearchController()
+        self.setupNavigationBarAppearance()
         self.setupTableView()
-        restCountriesClient.getCountryData()
+        self.restCountriesClient.getCountryData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.populateCountriesArray(_:)), name: didGetCountryData, object: nil)
         self.navigationController?.navigationBar.topItem?.title = "Country List"
     }
@@ -59,11 +60,13 @@ class CountryNamesTableViewController: UIViewController, UITableViewDataSource, 
         self.searchController.obscuresBackgroundDuringPresentation = true
         self.searchController.searchBar.placeholder = "Search"
         self.navigationItem.searchController = searchController
+        self.definesPresentationContext = true;
+    }
+    
+    fileprivate func setupNavigationBarAppearance() {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .always
-        self.definesPresentationContext = true;
-        
     }
     
     fileprivate func setupTableView() {

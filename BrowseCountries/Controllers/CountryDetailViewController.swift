@@ -20,6 +20,8 @@ class CountryDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.largeTitleDisplayMode = .never
         self.setupMapView()
         self.setupDetailsContainerView()
         self.displaySelectedCountryOnMapView()
