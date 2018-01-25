@@ -16,6 +16,7 @@
 		D32DC8232016C33600CB68C5 /* RestCountriesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DC8222016C33600CB68C5 /* RestCountriesClient.swift */; };
 		D32DC8252016DC9100CB68C5 /* StandAloneFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DC8242016DC9100CB68C5 /* StandAloneFunctionsTests.swift */; };
 		D32DC82B2017ACBD00CB68C5 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DC82A2017ACBD00CB68C5 /* SearchResultsViewController.swift */; };
+		D32DC82D20186F4600CB68C5 /* CountryNamesTableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32DC82C20186F4600CB68C5 /* CountryNamesTableViewHelper.swift */; };
 		D3ECB31820105234005FCA51 /* CountryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB31720105234005FCA51 /* CountryTests.swift */; };
 		D3ECB31A201052AE005FCA51 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB319201052AE005FCA51 /* Country.swift */; };
 		D3ECB320201137E0005FCA51 /* CountryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */; };
@@ -47,6 +48,7 @@
 		D32DC8222016C33600CB68C5 /* RestCountriesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestCountriesClient.swift; sourceTree = "<group>"; };
 		D32DC8242016DC9100CB68C5 /* StandAloneFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandAloneFunctionsTests.swift; sourceTree = "<group>"; };
 		D32DC82A2017ACBD00CB68C5 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		D32DC82C20186F4600CB68C5 /* CountryNamesTableViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNamesTableViewHelper.swift; sourceTree = "<group>"; };
 		D3ECB31720105234005FCA51 /* CountryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTests.swift; sourceTree = "<group>"; };
 		D3ECB319201052AE005FCA51 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				D30D950720100DCF00869A02 /* CountryNamesTableViewController.swift */,
+				D32DC82C20186F4600CB68C5 /* CountryNamesTableViewHelper.swift */,
 				D3ECB31F201137E0005FCA51 /* CountryDetailViewController.swift */,
 				D32DC82A2017ACBD00CB68C5 /* SearchResultsViewController.swift */,
 			);
@@ -265,6 +268,7 @@
 				D3ECB320201137E0005FCA51 /* CountryDetailViewController.swift in Sources */,
 				D30D950820100DCF00869A02 /* CountryNamesTableViewController.swift in Sources */,
 				D32DC8232016C33600CB68C5 /* RestCountriesClient.swift in Sources */,
+				D32DC82D20186F4600CB68C5 /* CountryNamesTableViewHelper.swift in Sources */,
 				D3ECB32420119AEC005FCA51 /* CountryDetailContainer.swift in Sources */,
 				D30D950620100DCF00869A02 /* AppDelegate.swift in Sources */,
 				D3ECB31A201052AE005FCA51 /* Country.swift in Sources */,
